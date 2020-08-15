@@ -11,6 +11,9 @@ void DeltaXRobot::SetSerial(HardwareSerial* gcodeSerial)
 {
   GcodeSerial = gcodeSerial;
   GcodeSerial->begin(115200);
+
+  GcodeSerial->println("IsDelta");
+  GcodeSerial->println("IsDelta");
 }
 
 void DeltaXRobot::Home()
@@ -134,16 +137,19 @@ bool DeltaXRobot::SerialEvent()
 		if (c == '\n' || c == '\r')
 		{
 			if (ReceiveString == "Ok" || ReceiveString == "ok")
-			{
-				ReceiveString = "";
+			{			
+        ReceiveString = "";	
 				IsOk = true;
 				return true;
 			}
+     
+      ReceiveString = "";
 			return false;
 		}
 		else
 		{
 			ReceiveString += (char)c;
+     
 		}
 	}
 
