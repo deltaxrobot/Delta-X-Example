@@ -7,6 +7,12 @@ void setup()
 	Serial.begin(115200);
   DeltaX.SetSerial(&Serial1);
 
+  DeltaX.Gcode("G28");
+  DeltaX.Gcode("G01 Z-350");
+  DeltaX.Gcode("G01 X-100");
+  DeltaX.Gcode("G02 I100 J0 X-100 Y0");
+  DeltaX.Gcode("G03 I100 J0 X-100 Y0");
+  
   DeltaX.BeginGcode("subprogram1");
 
   DeltaX.Home();
