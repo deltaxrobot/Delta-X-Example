@@ -1,0 +1,57 @@
+N0 G28
+
+;Acceleration
+N15 M204 A5000
+;Speed
+N25 G01 F400
+
+N35 G01 Z-310 
+
+N45 #Counter = 0
+N50 #Offset = -28
+
+;Delay 10 ms, without this function, the software will crash
+N65 G04 P10
+
+;If there is no object, go back and wait
+N80 IF [#O1_Y == NULL] THEN GOTO 65
+
+N90 G01 X[#O1_X] Z-330
+
+N100 IF [#O1_Y > 100] THEN GOTO 65 
+
+;Open the vacuum pump, ready to pick up
+N115 M03
+;Move to object on conveyor
+N125 G01 Y[#O1_Y + #Offset] 
+N130 G01 Y[#O1_Y + #Offset] 
+
+;Pick up
+N145 G01 Z-340
+N150 G01 Z-320
+
+;Drop down
+N165 #Counter = #Counter + 1
+N170 #XOrder = 80 + [#Counter / 4] * 30
+N175 #YOrder = [#Counter % 4] * 30
+N180 G01 X[#XOrder] Y[#YOrder]
+
+N190 G01 Z-380
+N195 M05
+N200 G01 Z-320
+
+;Delete the object just processed
+N215 M98 PdeleteFirstObject
+
+N225 GOTO 65
+
+
+
+
+
+
+
+
+
+
+
