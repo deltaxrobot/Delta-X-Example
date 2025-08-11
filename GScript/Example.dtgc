@@ -1,0 +1,35 @@
+;Delta X 2 Example
+
+;N10 G28
+
+;Acceleration
+N25 M204 A5000
+;Speed
+N35 G01 F800
+
+;Declare variables
+N55 #Counter = 0
+N60 #Counter = #Counter + 1
+
+;Call subprogram
+N75 M98 P2000
+
+; Begin subprogram
+N90 O2000
+
+N100 G01 Z[#robot0.HOME_Z - 80]
+N105 G01 X-100
+N110 G01 Z[#robot0.HOME_Z - 100]
+
+N120 G01 Z[#robot0.HOME_Z - 80]
+N125 G01 X100
+N130 G01 Z[#robot0.HOME_Z - 100]
+N135 M99
+;End subprogram
+
+;Loop 5 times
+N155 IF [#Counter < 5] THEN GOTO 75
+
+N165 G28
+
+
